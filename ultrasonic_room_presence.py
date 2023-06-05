@@ -1,3 +1,4 @@
+# for use with HC-SR04 ultrasonic sensor. Detects objects closer than 120cm and sends an MQTT message 
 import network
 import time
 import utime
