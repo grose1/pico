@@ -11,6 +11,7 @@ import _thread
 poll_object = select.poll()
 poll_object.register(sys.stdin,1)
 pin_button = Pin(14, Pin.IN, Pin.PULL_DOWN)
+pin_relay = Pin(17, mode=Pin.OUT)
 
 def core0_thread():
     while True:
@@ -18,10 +19,15 @@ def core0_thread():
         if poll_object.poll(0):
             #read as character
             ch = sys.stdin.read(1)
-            print (ch)
-           
-
-    
+            if ch == '1':
+                print('Pin 17 ON')
+                pin_relay.on()
+                time.sleep(4)
+                pin_relay.off()
+                print('Pin 17 OFF')
+            else:
+                print('Bad Input')
+          
 def core1_thread():
     while True:
         if pin_button.value() == 1:
